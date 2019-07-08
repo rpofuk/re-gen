@@ -1,0 +1,13 @@
+/*.log
+/target
+/*-init.clj
+/resources/public/js
+.rebel_redline_history
+.idea
+*.iml
+.#*
+.shadow-cljs
+.cpcache
+node_modules
+.nrepl-port
+out

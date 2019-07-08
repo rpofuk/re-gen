@@ -1,0 +1,30 @@
+{
+  "name": "re-gen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpofuk/re-gen.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rpofuk/re-gen/issues"
+  },
+  "homepage": "https://github.com/rpofuk/re-gen#readme",
+  "bin": {
+    "re-gen": "./bin/index.js"
+  },
+  "dependencies": {
+    "colors": "^1.3.3",
+    "commander": "^2.20.0",
+    "fs": "0.0.1-security",
+    "handlebars": "^4.1.2",
+    "inquirer": "^6.4.1"
+  }
+}
