@@ -2,20 +2,27 @@
 
 const program = require('commander');
 // Require logic.js file and extract controller functions using JS destructuring assignment
-const { initializeProject } = require('../lib/init.js');
+const { initializeProject, createPage } = require('../lib/init.js');
 
 program
   .version('0.0.1')
   .description('Contact management system');
 
 program
-  .command('init <projectName>')
+  .command('create <projectName>')
   .alias('c')
-  .description('Add a contact')
+  .description('Bootstrap project')
   .action((projectName) => {
     initializeProject(projectName);
   });
 
+program
+  .command('add <pageName>')
+  .alias('a')
+  .description('Add a page')
+  .action((pageName) => {
+    createPage(pageName);
+  });
 
 program.parse(process.argv);
 

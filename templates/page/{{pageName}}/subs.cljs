@@ -1,6 +1,5 @@
-(ns {{projectName}}.subs
+(ns {{projectName}}.home.subs
   (:require
-    [{{projectName}}.db :as db]
     [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub
@@ -9,9 +8,9 @@
     (:name db)))
 
 (re-frame/reg-sub
- ::active-panel
+ ::decks
  (fn [db]
-   (::db/active-panel db)))
+   (:decks db)))
 
 (re-frame/reg-sub
   ::menu

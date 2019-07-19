@@ -3,8 +3,9 @@
             [{{projectName}}.subs :as subs]
             [goog.object :as gobj]
             [reagent.core :as r]
-            ["react-router-dom" :refer (Route Link) :rename {BrowserRouter Router}]
-
+            [{{projectName}}.events :as events]
+            [{{projectName}}.routes :as routes]
+            [{{projectName}}.home.views :as home]
             ["@material-ui/icons/Menu" :default MenuIcon]
             ["@material-ui/core/AppBar" :default AppBar]
             ["@material-ui/core/Toolbar" :default Toolbar]
@@ -14,42 +15,44 @@
             ["@material-ui/icons/Menu" :default MenuIcon]))
 
 
-(defn index []
-  [:h2 "Home"])
-
-(defn users []
-  [:h2 "Users"])
 
 (defn about []
   [:h2 "About"])
 
-(def Index (r/reactify-component index))
-(def Users (r/reactify-component users))
-(def About (r/reactify-component about))
+(def components
+  {:home  home/main-panel
+   :about about})
+
+
+
+(defn component
+  []
+  ((@(rf/subscribe [::subs/active-panel]) components))
+  )
+
 
 
 (defn page
   []
-  [:> Router
+  (routes/app-routes)
+  [:div
+
    [:> AppBar {:position "static"}
     [:> Toolbar
-     [:> IconButton {:edge "start" :area-label "Menu"}
+     [:> IconButton {:edge "start" :bel "Menu"}
       [:> MenuIcon]
       ]
      [:> Typography {:variant "h6"} "Imhere"]
      [:> Button "Login"]]]
    [:div
+    (component)
     [:nav
      [:ul
       [:li
-       [:> Link {:to "/"} "Home"]]
+       [:> Button {:href "/"} "Home"]]
       [:li
-       [:> Link {:to "/about/"} "About"]]
-      [:li
-       [:> Link {:to "/users/"} "Users"]]]]
-    [:> Route {:path "/" :exact true :component Index}]
-    [:> Route {:path "/about/" :component About}]
-    [:> Route {:path "/users/" :component Users}]
+       [:> Button {:href "/about"} "About"]]
+      ]]
     ]])
 
 

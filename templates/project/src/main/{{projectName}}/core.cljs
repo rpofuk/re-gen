@@ -1,6 +1,7 @@
 (ns {{projectName}}.core
   (:require [reagent.core :as reagent]
             [re-frame.core :as re-frame]
+
             [{{projectName}}.events :as events]
             [{{projectName}}.views :as views]
             [{{projectName}}.config :as config]))
@@ -18,6 +19,8 @@
 
 (defn ^:export init
   []
-  (re-frame/dispatch-sync [::events/initialize-db])
+  (re-frame/dispatch [::events/initialize-db])
+  (.log js/console "bla")
   (dev-setup)
+
   (mount-root))
