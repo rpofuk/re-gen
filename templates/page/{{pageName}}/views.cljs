@@ -1,7 +1,7 @@
-(ns {{projectName}}.home.views
+(ns {{projectName}}.{{pageName}}.views
   (:require [re-frame.core :as rf]
-            [{{projectName}}.home.subs :as subs]
-            [{{projectName}}.home.events :as events]
+            [{{projectName}}.{{pageName}}.subs :as subs]
+            [{{projectName}}.{{pageName}}.events :as events]
 
             [goog.object :as gobj]
             [reagent.core :as r]
@@ -12,9 +12,9 @@
 
 
 (defn main-panel []
-  [:h2 "Hpme"])
+  [:h2 "{{pageName}}"])
 
-(def home (r/reactify-component main-panel))
+(def {{pageName}} (r/reactify-component main-panel))
 
 
 

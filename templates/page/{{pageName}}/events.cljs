@@ -1,11 +1,11 @@
-(ns {{projectName}}.home.events
+(ns {{projectName}}.{{pageName}}.events
   (:require
     [re-frame.core :as re-frame]
-    [{{projectName}}.home.db :as db]
+    [{{projectName}}.{{pageName}}.db :as db]
     ))
 
 (re-frame/reg-event-db
-  :initialize-home-db
+  :initialize-{{pageName}}-db
   (fn [db _]
     (merge db db/default-db)))
 

@@ -23,11 +23,13 @@
   {:home  home/main-panel
    :about about})
 
-
-
 (defn component
   []
-  ((@(rf/subscribe [::subs/active-panel]) components))
+  (let [panel @(rf/subscribe [::subs/active-panel])]
+    (if (contains? components panel)
+      ((panel components))
+      [:h2 "Loading"])
+    )
   )
 
 

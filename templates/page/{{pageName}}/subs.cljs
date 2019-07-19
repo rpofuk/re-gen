@@ -1,4 +1,4 @@
-(ns {{projectName}}.home.subs
+(ns {{projectName}}.{{pageName}}.subs
   (:require
     [re-frame.core :as re-frame]))
 
