@@ -81,16 +81,26 @@ npx @rpofuk/re-gen add news
 (def components
   {:home  home/main-panel
    :about about/main-panel
-   **:news news/main-panel**})
+   :news news/main-panel})
 
 # File src/main/routes.cljs
 (def routes ["/" {""      :home
                   "about" :about
-                  **"news" :news**}])
+                  "news"  :news}])
 
 
 # New page should be now reachable
 http://127.0.0.1:3000/news
+
+# To add link to this page in app do for example in src/main/views.cljs
+[:nav
+ [:ul
+   [:li
+    [:> Button {:href "/"} "Home"]]
+   [:li
+    [:> Button {:href "/about"} "About"]]
+   [:li
+    [:> Button {:href "/news"} "News"]]]]]])`
 
 ```
 Development
