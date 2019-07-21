@@ -24,5 +24,12 @@ program
     createPage(pageName);
   });
 
+program
+  .on('*', function() {
+      console.log('Unknown Command: ' + program.args.join(' '))
+    program.help();
+  });
+  
+
 program.parse(process.argv);
 

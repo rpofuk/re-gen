@@ -9,12 +9,10 @@
             ))
 
 
-
-
-(defn main-panel []
+(defn main-panel
+  [classes]
   [:h2 "{{pageName}}"])
 
-(def {{pageName}} (r/reactify-component main-panel))
 
 
 
