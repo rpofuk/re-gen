@@ -7,7 +7,9 @@
                       "color"  "green"
                       "& span" {
                                 "color" "blue"
-                                }}}
+                                }
+                      }}
+   :page  {}
    :title {
            :flexGrow 1
            }})

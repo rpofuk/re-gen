@@ -1,18 +1,16 @@
 (ns {{projectName}}.{{pageName}}.subs
   (:require
+    [{{projectName}}.{{pageName}}.db :as db]
     [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub
   ::name
   (fn [db]
-    (:name db)))
+    (::db/name db)))
 
 (re-frame/reg-sub
- ::decks
- (fn [db]
-   (:decks db)))
-
-(re-frame/reg-sub
-  ::menu
+  ::clicks
   (fn [db]
-    (:drawer db)))
+    (::db/clicks db)))
+
+

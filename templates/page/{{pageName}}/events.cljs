@@ -10,6 +10,6 @@
     (merge db db/default-db)))
 
 (re-frame/reg-event-db
- :menu
- (fn [db _]
-   (update db :drawer #(not %))))
+  ::click
+  (fn [db _]
+    (update-in db [::db/clicks] inc)))

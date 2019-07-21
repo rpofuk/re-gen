@@ -2,16 +2,18 @@
   (:require [re-frame.core :as rf]
             [{{projectName}}.{{pageName}}.subs :as subs]
             [{{projectName}}.{{pageName}}.events :as events]
-
-            [goog.object :as gobj]
-            [reagent.core :as r]
-
             ))
 
 
 (defn main-panel
   [classes]
-  [:h2 "{{pageName}}"])
+  [:div
+   [:h2
+    {:class-name (:page classes)
+     :on-click   #(rf/dispatch [::events/click])}
+    @(rf/subscribe [::subs/name])
+    ]
+   [:div @(rf/subscribe [::subs/clicks])]])
 
 
 
