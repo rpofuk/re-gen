@@ -21,7 +21,7 @@ Commands:
   add|a <pageName>        Add a page
 ```
 
- 
+```
 # Create projecet
 npx @rpofuk/re-gen create myproject
 cd myproject 
