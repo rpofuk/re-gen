@@ -4,8 +4,9 @@ Generator for initalizing re-frame web application using react, material-ui and 
 
 ```
 npm install -g shadow-cljs # Node.js and JVM are required to be installed
-
-# Options
+```
+Options
+```
 npx @rpofuk/re-gen --help
 Usage: re-gen [options] [command]
 
@@ -18,8 +19,9 @@ Options:
 Commands:
   create|c <projectName>  Bootstrap project
   add|a <pageName>        Add a page
+```
 
-
+ 
 # Create projecet
 npx @rpofuk/re-gen create myproject
 cd myproject 
@@ -31,9 +33,12 @@ npx @rpofuk/re-gen add about
 # Running
 npm install
 shadow-cljs watch app
+```
 
 
-# Generated project has folowing structure
+Generated project has folowing structure
+```
+
 .
 ├── resources
 │   └── public
@@ -94,7 +99,4 @@ Development
 node bin/index.js
 sudo npm install -g ./
 ```
-A
-A
-A
 
