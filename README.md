@@ -110,3 +110,7 @@ node bin/index.js
 sudo npm install -g ./
 ```
 
+During development you can use local installation: 
+```
+npx re-gen --help
+```

@@ -5,7 +5,7 @@
             [{{projectName}}.events :as events]
             [{{projectName}}.views :as views]
             [{{projectName}}.config :as config]
-            ["@material-ui/core/styles" :refer [withStyles]]
+            ["@material-ui/core/styles" :refer [withStyles, createMuiTheme, MuiThemeProvider]]
             [clojure.walk :refer [keywordize-keys]]
             [reagent.core :as r]
             [{{projectName}}.styles :as styles]
@@ -22,10 +22,12 @@
   "Convert styles into javascript map"
   [theme]
   (clj->js
-    styles/rules
+    (styles/rules theme)
     ))
 
-(def with-custom-styles (withStyles raw-theme))
+(defn with-custom-styles
+  [component]
+  ((withStyles raw-theme) component))
 
 (defn content
   "Wrapper to help remove JS style access to class names (.-root classes) to (:root classes)"
@@ -36,11 +38,10 @@
 
 (def body
   "Initialize body with custom style"
-  [:> (with-custom-styles (r/reactify-component content))])
-
-
-
-
+  [:> MuiThemeProvider {:theme (createMuiTheme (clj->js
+                                                 styles/theme
+                                                 ))}
+   [:> (with-custom-styles (r/reactify-component content))]])
 
 
 

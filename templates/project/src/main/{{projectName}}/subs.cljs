@@ -14,6 +14,18 @@
    (::db/active-panel db)))
 
 (re-frame/reg-sub
-  ::menu
+  ::drawer
   (fn [db]
-    (:drawer db)))
+    (::db/drawer db)))
+
+(re-frame/reg-sub
+  ::ready
+  (fn [db]
+    (::db/ready db)))
+
+
+(re-frame/reg-sub
+  ::menu-expanded
+  (fn [db]
+    (::db/menu-expanded db)))
+
