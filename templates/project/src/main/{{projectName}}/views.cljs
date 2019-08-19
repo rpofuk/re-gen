@@ -1,13 +1,13 @@
-(ns {{projectName}} .views
+(ns {{projectName}}.views
 
   (:require [re-frame.core :as rf]
-    [{{projectName}} .subs :as subs]
+    [{{projectName}}.subs :as subs]
     [reagent.core :as r]
-    [{{projectName}} .events :as events]
-    [{{projectName}} .util :as util]
-    [{{projectName}} .routes :as routes]
-    [{{projectName}} .home.views :as home]
-    [{{projectName}} .about.views :as about]
+    [{{projectName}}.events :as events]
+    [{{projectName}}.util :as util]
+    [{{projectName}}.routes :as routes]
+    [{{projectName}}.home.views :as home]
+    [{{projectName}}.about.views :as about]
 
     ["@material-ui/icons/Menu" :default MenuIcon]
     ["@material-ui/core/AppBar" :default AppBar]
@@ -42,11 +42,10 @@
   [item classes]
   (let [expanded @(rf/subscribe [::subs/menu-expanded])]
     [:> ListItem {:button     true
-                  :href       (:key item)
+                  :href       (routes/path-for (:key item))
                   :component  "a"
                   :on-click   (fn [e]
-                                (.preventDefault e)
-                                (rf/dispatch [:navigate (:key item)]))
+                                (.preventDefault e))
                   :key        (:key item)
                   :class-name (:nested classes)}
      [:> ListItemIcon
@@ -54,13 +53,18 @@
      [:> ListItemText {:primary (:name item)}]
      ]))
 
-(def menu
+
+
+(defn menu
+  []
   [{
-    :key  ""
-    :name "Home"},
-   {:key  "about"
+    :key  :home
+    :name "Home"}
+   {:key  :about
     :name "About"
     }])
+
+
 
 (defn drawer
   [classes]
@@ -72,7 +76,7 @@
 
     (into [] (concat
                [:> List {:component "nav"}]
-               (for [item menu]
+               (for [item (menu)]
                  (menu-item item classes))))
     ]])
 
@@ -108,7 +112,7 @@
            [:> Button {:variant "contained"
                        :color   "secondary"} "Register"]]]]]]
 
-      [:div {:style {:margin "8px"}}
+      [:div {:style {:margin "16px"}}
        (util/placeholder components classes)]]]
     [:div "Loading"]))
 

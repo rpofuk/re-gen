@@ -9,8 +9,7 @@
 (defn main-panel
   [classes]
   [:> Grid {:container true
-            :item      true
-            :xs        12}
+            :item      true}
    [:> Grid {:item true
              :xs   12}
     [:h2
