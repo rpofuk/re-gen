@@ -26,9 +26,8 @@ Commands:
 npx @rpofuk/re-gen create myproject
 cd myproject 
 
-# Create 2 views that are assumed by project tempalte
-npx @rpofuk/re-gen add home
-npx @rpofuk/re-gen add about 
+# Create new view
+npx @rpofuk/re-gen add demo
 
 # Running
 npm install

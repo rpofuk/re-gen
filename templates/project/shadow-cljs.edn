@@ -1,19 +1,17 @@
 {:deps   true
-
  :nrepl  {:port 3333}
-
  :builds {:app
           {:target     :browser
            :output-dir "resources/public/js"
            :asset-path "/js"
-           :modules    {:main {:entries [{{projectName}}.core]}}
+           :modules    {:main {:entries [projectname.core]}}
            :compiler-options
                        {:infer-externs    :auto
                         :closure-warnings {:global-this :off}
                         :closure-defines  {"re_frame.trace.trace_enabled_QMARK_"        true
                                            "day8.re_frame.tracing.trace_enabled_QMARK_" true}}
 
-           :devtools   {:after-load   {{projectName}}.core/mount-root
+           :devtools   {:after-load   projectname.core/mount-root
                         :http-root    "resources/public"
                         :http-handler shadow.http.push-state/handle
                         :http-port    3000
@@ -25,10 +23,10 @@
           {:target     :browser
            :output-dir "resources/public/js/devcards"
            :asset-path "/js/devcards"
-           :modules    {:main {:entries [{{projectName}}.devcards]}}
+           :modules    {:main {:entries [projectname.devcards]}}
            :devtools   {:http-port        3001
                         :http-root        "resources/public"
                         :http-handler     shadow.http.push-state/handle
                         :push-state/index "devcards.html"
-                        :after-load       {{projectName}}.devcards/init}
+                        :after-load       projectname.devcards/init}
            :dev        {:compiler-options {:devcards true}}}}}

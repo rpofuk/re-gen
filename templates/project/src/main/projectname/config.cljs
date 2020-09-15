@@ -1,3 +1,3 @@
-(ns {{projectName}}.config)
+(ns projectname.config)
 
 (def debug? ^boolean goog.DEBUG)

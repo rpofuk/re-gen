@@ -1,10 +1,9 @@
-(ns {{projectName}}.{{pageName}}.views
+(ns projectname.home.views
   (:require [re-frame.core :as rf]
-            [{{projectName}}.{{pageName}}.subs :as subs]
-            [{{projectName}}.{{pageName}}.events :as events]
+            [projectname.home.subs :as subs]
+            [projectname.home.events :as events]
 
             ["@material-ui/core/Grid" :default Grid]))
-
 
 (defn main-panel
   [classes]

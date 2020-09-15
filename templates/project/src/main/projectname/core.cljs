@@ -1,18 +1,17 @@
-(ns {{projectName}}.core
+(ns projectname.core
   (:require [reagent.core :as reagent]
             [re-frame.core :as re-frame]
-
-            [{{projectName}}.events :as events]
-            [{{projectName}}.views :as views]
-            [{{projectName}}.config :as config]
+            [projectname.events :as events]
+            [projectname.views :as views]
+            [projectname.config :as config]
             ["@material-ui/core/styles" :refer [withStyles, createMuiTheme, MuiThemeProvider]]
             [clojure.walk :refer [keywordize-keys]]
             [reagent.core :as r]
-            [{{projectName}}.styles :as styles]
-            [{{projectName}}.routes :refer [routes]]
+            [reagent.dom :as dom]
+            [projectname.styles :as styles]
+            [projectname.routes :refer [routes]]
             [bidi.bidi :as bidi]
             [pushy.core :as pushy]))
-
 
 (defn dev-setup
   []
@@ -22,8 +21,7 @@
   "Convert styles into javascript map"
   [theme]
   (clj->js
-    (styles/rules theme)
-    ))
+    (styles/rules theme)))
 
 (defn with-custom-styles
   [component]
@@ -39,33 +37,28 @@
 (def body
   "Initialize body with custom style"
   [:> MuiThemeProvider {:theme (createMuiTheme (clj->js
-                                                 styles/theme
-                                                 ))}
+                                                 styles/theme))}
    [:> (with-custom-styles (r/reactify-component content))]])
-
-
 
 (defn- parse-url [url]
   (bidi/match-route routes url))
 
-(defn- dispatch-route [matched-route]
-  (let [panel-name (:handler matched-route)]
-    (re-frame/dispatch [::events/set-active-panel panel-name])))
+(defn- dispatch-route [{:keys [handler route-params]}]
+  (re-frame/dispatch [::events/set-active-panel
+                      handler
+                      route-params]))
 
 (defn app-routes []
   (pushy/start! (pushy/pushy dispatch-route parse-url)))
-
-(def url-for (partial bidi/path-for routes))
-
 
 (defn mount-root
   []
   (re-frame/clear-subscription-cache!)
   (app-routes)
-  (reagent/render body (.getElementById js/document "app")))
+  (dom/render body (.getElementById js/document "app")))
 
 (defn ^:export init
-  []
-  (re-frame/dispatch [::events/initialize-db])
+  [config]
+  (re-frame/dispatch [::events/initialize-db (js->clj config)])
   (dev-setup)
   (mount-root))
