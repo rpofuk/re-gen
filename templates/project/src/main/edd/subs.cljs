@@ -1,6 +1,6 @@
-(ns projectname.subs
+(ns edd.subs
   (:require
-   [projectname.db :as db]
+   [edd.db :as db]
    [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub

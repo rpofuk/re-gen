@@ -1,4 +1,4 @@
-(ns projectname.db)
+(ns edd.db)
 
 (def default-db
   {::active-panel :home

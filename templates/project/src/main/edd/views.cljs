@@ -1,13 +1,11 @@
-(ns projectname.views
+(ns edd.views
 
   (:require [re-frame.core :as rf]
-            [projectname.subs :as subs]
+            [edd.subs :as subs]
             [reagent.core :as r]
-            [projectname.events :as events]
-            [projectname.util :as util]
-            [projectname.routes :refer [routes]]
-            [projectname.routing :refer [path-for]]
-            [projectname.panels :as panels]
+            [edd.events :as events]
+            [edd.util :as util]
+            [edd.routing :refer [path-for]]
             ["@material-ui/icons/Menu" :default MenuIcon]
             ["@material-ui/core/AppBar" :default AppBar]
             ["@material-ui/core/Toolbar" :default Toolbar]
@@ -31,7 +29,7 @@
 
 
 (defn menu-item
-  [item classes]
+  [{:keys [classes routes]} item]
   (let [expanded @(rf/subscribe [::subs/menu-expanded])]
     [:> ListItem {:button     true
                   :href       (path-for routes
@@ -54,25 +52,26 @@
     :params [:id 1]}])
 
 (defn drawer
-  [classes]
+  [{:keys [classes] :as ctx}]
   [:> Drawer {:open     @(rf/subscribe [::subs/drawer])
-              :on-close #(rf/dispatch [::events/toggle-drawer])}
+              :on-close #(rf/dispatch [:toggle-drawer])}
 
    [:div {:class-name (:drawer-list classes)
           :role       "presentation"}
 
-    (into [] (concat
-               [:> List {:component "nav"}]
-               (for [item (menu)]
-                 (menu-item item classes))))]])
+    (into [:> List {:component "nav"}]
+          (map
+            (fn [item]
+              (menu-item ctx item))
+            (menu)))]])
 
 (defn page
-  [classes]
+  [{:keys [classes panels name] :as ctx}]
 
   (if @(rf/subscribe [::subs/ready])
     [:div {:class-name (:root classes)}
      @(rf/subscribe [::subs/ready])
-     (drawer classes)
+     (drawer ctx)
      [:> Grid {:container  true
                :class-name (:root classes)
                :spacing    1}
@@ -84,10 +83,10 @@
         [:> Toolbar
          [:> IconButton {:edge     "start"
                          :bel      "Menu"
-                         :on-click #(rf/dispatch [::events/toggle-drawer])}
+                         :on-click #(rf/dispatch [:toggle-drawer])}
           [:> MenuIcon]]
 
-         [:> Typography {:variant "h6" :class-name (:title classes)} "projectname"]
+         [:> Typography {:variant "h6" :class-name (:title classes)} name]
          [:> Grid {:container true
                    :direction "row-reverse"
                    :spacing   3}
@@ -98,7 +97,7 @@
                        :color   "secondary"} "Register"]]]]]]
 
       [:div {:style {:margin "16px"}}
-       (util/placeholder panels/pages classes)]]]
+       (util/placeholder panels classes)]]]
     [:div "Loading"]))
 
 

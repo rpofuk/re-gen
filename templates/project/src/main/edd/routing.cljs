@@ -1,4 +1,4 @@
-(ns projectname.routing
+(ns edd.routing
   (:require
     [bidi.bidi :as bidi]))
 

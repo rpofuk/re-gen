@@ -1,8 +1,8 @@
-(ns projectname.events
+(ns edd.events
   (:import goog.history.Html5History)
   (:require
     [re-frame.core :as re-frame]
-    [projectname.db :as db]))
+    [edd.db :as db]))
 
 (re-frame/reg-event-db
   ::initialize-db
@@ -10,7 +10,7 @@
     (assoc db/default-db :config event)))
 
 (re-frame/reg-event-fx
-  ::set-active-panel
+  :set-active-panel
   (fn [{:keys [db]} [_ page & [params]]]
     {:db       (assoc db ::db/active-panel page
                          ::db/drawer false)
@@ -18,17 +18,12 @@
                 params]}))
 
 (re-frame/reg-event-db
-  ::test
-  (fn [db event]
-    (assoc db ::db/test (second event))))
-
-(re-frame/reg-event-db
-  ::toggle-drawer
+  :toggle-drawer
   (fn [db _]
     (update db ::db/drawer #(not %))))
 
 (re-frame/reg-event-db
-  ::menu-toggle
+  :menu-toggle
   (fn [db event]
     (update-in db [::db/menu-expanded (second event)] #(not %))))
 

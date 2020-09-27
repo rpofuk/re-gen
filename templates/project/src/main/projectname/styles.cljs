@@ -1,12 +1,13 @@
 (ns projectname.styles
   (:require
-   ["@material-ui/core/colors/pink" :refer [pink]]))
+    ["@material-ui/core/colors/pink" :refer [pink]]))
 
-(def theme
+(defn theme
+  []
   {:palette {:primary   {"main" "rgba(255, 234, 0, 0.87)"}
              :secondary {"main" "rgba(255, 224, 225, 0.86)"}}})
 
-(defn rules
+(defn styles
   [theme]
   {:root                        {:flexGrow 1
                                  "& p"     {"color"  "green"

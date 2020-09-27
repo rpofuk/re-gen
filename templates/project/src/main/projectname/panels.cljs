@@ -3,6 +3,7 @@
     [projectname.home.views :as home]
     [projectname.about.views :as about]))
 
-(def pages
+(defn panels
+  []
   {:home  home/main-panel
    :about about/main-panel})

@@ -1,7 +1,7 @@
-(ns projectname.util
+(ns edd.util
   (:require
    [re-frame.core :as rf]
-   [projectname.subs :as subs]))
+   [edd.subs :as subs]))
 
 (defn placeholder
   [components classes]
