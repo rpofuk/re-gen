@@ -23,11 +23,11 @@ Commands:
 
 ```
 # Create projecet
-npx @rpofuk/re-gen create myproject
+npx @rpofuk/re-gen@1.1.7 create myproject
 cd myproject 
 
 # Create new view
-npx @rpofuk/re-gen add demo
+npx @rpofuk/re-gen@1.1.7 add demo
 
 # Running
 npm install
