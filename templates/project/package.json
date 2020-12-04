@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
-    "highlight.js": "^10.2.0",
+    "highlight.js": "^10.4.1",
     "karma": "^5.2.3",
     "karma-chrome-launcher": "^3.1.0",
     "karma-cljs-test": "^0.1.0",
