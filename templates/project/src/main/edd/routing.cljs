@@ -1,6 +1,6 @@
 (ns edd.routing
   (:require
-    [bidi.bidi :as bidi]))
+   [bidi.bidi :as bidi]))
 
 (defn path-for
   [routes page & [params]]

@@ -6,7 +6,9 @@
             [edd.events :as events]
             [edd.util :as util]
             [edd.routing :refer [path-for]]
-            ["@material-ui/icons/Menu" :default MenuIcon]
+            [edd.i18n :refer [tr]]
+            [reagent.core :as reagent]
+
             ["@material-ui/core/AppBar" :default AppBar]
             ["@material-ui/core/Toolbar" :default Toolbar]
             ["@material-ui/core/Typography" :default Typography]
@@ -20,85 +22,100 @@
             ["@material-ui/core/ListSubheader" :default ListSubheader]
             ["@material-ui/core/Grid" :default Grid]
             ["@material-ui/core/Collapse" :default Collapse]
-            ["@material-ui/core/Grid" :default Grid]
 
             ["@material-ui/icons/ChevronRight" :default ChevronRight]
             ["@material-ui/icons/StarBorder" :default StarBorder]
+
+            ["@material-ui/icons/KeyboardArrowRight" :default KeyboardArrowRightIcon]
+
+
+
+            ["@material-ui/core/FormControl" :default FormControl]
+            ["@material-ui/core/FormHelperText" :default FormHelperText]
+            ["@material-ui/core/Select" :default Select]
+            ["@material-ui/core/InputLabel" :default InputLabel]
+            ["@material-ui/core/MenuItem" :default MenuItem]
             ["@material-ui/icons/Menu" :default MenuIcon]))
 
-
-
 (defn menu-item
-  [{:keys [classes routes]} item]
-  (let [expanded @(rf/subscribe [::subs/menu-expanded])]
-    [:> ListItem {:button     true
-                  :href       (path-for routes
-                                        (:key item) (get item :params []))
-                  :component  "a"
-                  :on-click   (fn [e]
-                                (.preventDefault e))
-                  :key        (:key item)
-                  :class-name (:nested classes)}
-     [:> ListItemIcon
-      [:> StarBorder]]
-     [:> ListItemText {:primary (:name item)}]]))
+  [{:keys [classes]} item]
+  [:> Grid {:item true
+            :xs   12}
+   [:> Button {:on-click   #(rf/dispatch [::events/set-active-panel item])
+               :key        item
+               :class-name (:nested classes)
+               :start-icon (reagent/as-element [:> KeyboardArrowRightIcon])}
+    (tr [:menu item])]])
 
-(defn menu
-  []
-  [{:key  :home
-    :name "Home"}
-   {:key    :about
-    :name   "About"
-    :params [:id 1]}])
 
 (defn drawer
-  [{:keys [classes] :as ctx}]
+  [{:keys [classes menu] :as ctx}]
   [:> Drawer {:open     @(rf/subscribe [::subs/drawer])
-              :on-close #(rf/dispatch [:toggle-drawer])}
+              :on-close #(rf/dispatch [::events/toggle-drawer])}
 
    [:div {:class-name (:drawer-list classes)
           :role       "presentation"}
 
-    (into [:> List {:component "nav"}]
+    [:> Grid {:container true}
+     [:> Grid {:item true
+               :xs   12}]
+     [:> Grid {:item true
+               :xs   1}]
+     [:> Grid {:item true
+               :xs   10}
+      (into
+        [:> Grid {:container true
+                  :item      true
+                  :spacing   1}
+
+         [:> Grid {:item true
+                   :xs   12}
+          [:> FormControl
+           (let [langs @(rf/subscribe [::subs/languages])]
+             (into [:> Select {:value     @(rf/subscribe [::subs/selected-language])
+                               :on-change #(rf/dispatch [::events/change-language (-> (.-target %) (.-value) (keyword))])}]
+                   (map
+                     (fn [l]
+                       [:> MenuItem {:value l} (tr [:languages l])])
+                     langs)))
+
+           [:> FormHelperText (tr :language)]
+           ]]]
+        ; filter here for example non public pages
+        (let [menu-items menu]
           (map
             (fn [item]
               (menu-item ctx item))
-            (menu)))]])
+            menu-items)))]]]])
 
 (defn page
-  [{:keys [classes panels name] :as ctx}]
+  [{:keys [classes panels] :as ctx}]
 
   (if @(rf/subscribe [::subs/ready])
     [:div {:class-name (:root classes)}
      @(rf/subscribe [::subs/ready])
      (drawer ctx)
      [:> Grid {:container  true
-               :class-name (:root classes)
-               :spacing    1}
+               :class-name (:root classes)}
       [:> Grid {:item true
-                :xs   12}
+                :xs   12 :class-name (:header classes)}
        [:> AppBar {:class-name (:app-bar classes)
                    :position   "static"}
 
         [:> Toolbar
          [:> IconButton {:edge     "start"
                          :bel      "Menu"
-                         :on-click #(rf/dispatch [:toggle-drawer])}
+                         :on-click #(rf/dispatch [::events/toggle-drawer])}
           [:> MenuIcon]]
 
-         [:> Typography {:variant "h6" :class-name (:title classes)} name]
          [:> Grid {:container true
-                   :direction "row-reverse"
-                   :spacing   3}
+                   :direction "row-reverse"}
           [:> Grid {:item true}
-           [:> Button "Login"]]
-          [:> Grid {:item true}
-           [:> Button {:variant "contained"
-                       :color   "secondary"} "Register"]]]]]]
+           "Login Placeholder"]]]]]
 
-      [:div {:style {:margin "16px"}}
+      [:> Grid {:container true}
        (util/placeholder panels classes)]]]
-    [:div "Loading"]))
+    [:> Grid {:container true :item true} "Loading"]))
 
 
 

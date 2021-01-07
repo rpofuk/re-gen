@@ -17,8 +17,6 @@
        (clj->js
          (styles theme)))) component))
 
-
-
 (defn body
   [{:keys [theme panels] :as ctx}]
   "Initialize body with custom style"
@@ -33,10 +31,8 @@
                  :classes (keywordize-keys
                             (:classes (js->clj props))))))))]])
 
-
-
 (defn- dispatch-route [{:keys [handler route-params]}]
-  (re-frame/dispatch [:set-active-panel
+  (re-frame/dispatch [::events/set-active-panel
                       handler
                       route-params]))
 
@@ -56,6 +52,6 @@
     (.getElementById js/document "app")))
 
 (defn init
-  [{:keys [config] :as ctx}]
-  (re-frame/dispatch [::events/initialize-db (js->clj config)])
+  [ctx]
+  (re-frame/dispatch [::events/initialize-db ctx])
   (mount-root ctx))
