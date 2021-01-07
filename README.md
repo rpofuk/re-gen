@@ -39,36 +39,41 @@ Generated project has folowing structure
 ```
 
 .
+├── deps.edn
+├── Dockerfile
+├── package.json
+├── package-lock.json
+├── project.iml
 ├── resources
 │   └── public
 │       ├── devcards.html
 │       └── index.html
-├── src
-│   └── main
-│       └── myproject
-│           ├── about
-│           │   ├── db.cljs
-│           │   ├── events.cljs
-│           │   ├── subs.cljs
-│           │   └── views.cljs
-│           ├── home
-│           │   ├── db.cljs
-│           │   ├── events.cljs
-│           │   ├── subs.cljs
-│           │   └── views.cljs
-│           ├── config.cljs
-│           ├── core.cljs
-│           ├── db.cljs
-│           ├── events.cljs
-│           ├── routes.cljs
-│           ├── styles.cljs
-│           ├── subs.cljs
-│           ├── util.cljs
-│           └── views.cljs
-├── deps.edn
-├── package.json
-└── shadow-cljs.edn
-
+├── shadow-cljs.edn
+└── src
+    └── main
+        ├── edd
+        │   ├── core.cljs
+        │   ├── db.cljs
+        │   ├── events.cljs
+        │   ├── i18n.cljs
+        │   ├── routing.cljs
+        │   ├── subs.cljs
+        │   ├── util.cljs
+        │   └── views.cljs
+        └── myproject
+            ├── about
+            │   ├── db.cljs
+            │   ├── events.cljs
+            │   ├── subs.cljs
+            │   └── views.cljs
+            ├── core.cljs
+            ├── home
+            │   ├── db.cljs
+            │   ├── events.cljs
+            │   ├── subs.cljs
+            │   └── views.cljs
+            ├── i18n.cljs
+            └── styles.cljs
 
 ```
 
@@ -76,30 +81,18 @@ Adding new view
 ```
 npx @rpofuk/re-gen add news
 
-# File src/main/views.cljs (dont forget required :)
-(def components
-  {:home  home/main-panel
-   :about about/main-panel
-   :news news/main-panel})
+; src/main/myproject/core.cljs (dont forget required :))
+; Add translations to i18n file for UX
 
-# File src/main/routes.cljs
-(def routes ["/" {""      :home
-                  "about" :about
-                  "news"  :news}])
+(defn ^:export init
+  [config]
+  (core/init
+    {...
+     :panels       {...
+                    :news news/main-panel}
+     ...}))
 
 
-# New page should be now reachable
-http://127.0.0.1:3000/news
-
-# To add link to this page in app do for example in src/main/views.cljs
-[:nav
- [:ul
-   [:li
-    [:> Button {:href "/"} "Home"]]
-   [:li
-    [:> Button {:href "/about"} "About"]]
-   [:li
-    [:> Button {:href "/news"} "News"]]]]]])`
 
 ```
 Development
